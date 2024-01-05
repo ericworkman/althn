@@ -5,7 +5,7 @@ import useSWR from 'swr'
 function PreviewImage({ url }: { url: string }) {
   // @ts-ignore
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  const { data, error, isLoading } = useSWR(`/api/preview?url=${url}`, fetcher)
+  const { data, error, isLoading } = useSWR(`/api/preview?url=${encodeURIComponent(url)}`, fetcher)
 
   let result
   if (error) {
@@ -17,7 +17,7 @@ function PreviewImage({ url }: { url: string }) {
       <img
         src={data.image}
         alt=""
-        className="absolute inset-0 h-full w-full rounded bg-gray-50 object-cover"
+        className="absolute inset-0 h-full w-full rounded object-contain"
       />
     )
   }
