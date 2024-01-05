@@ -22,11 +22,7 @@ function PreviewImage({ url }: { url: string }) {
     )
   }
 
-  return (
-    <div className="relative aspect-[2/1] aspect-[16/9] md:w-64 md:shrink-0">
-      {result}
-    </div>
-  )
+  return <div className="relative aspect-[2/1] aspect-[16/9] md:w-64 md:shrink-0">{result}</div>
 }
 
 export default PreviewImage

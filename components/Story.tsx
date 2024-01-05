@@ -23,18 +23,30 @@ async function Story({ storyID }: { storyID: number }) {
         <div>
           <div className="grid grid-cols-2 md:grid-cols-1 md:flex items-center gap-2 gap-x-4 text-sm">
             <RelativeTime unixTimestamp={story.time} />
-            <a href={`https://news.ycombinator.com/user?id=${story.by}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://news.ycombinator.com/user?id=${story.by}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Tag text={story.by} />
             </a>
             <div>
               <Tag text={pluralize('point', story.score)} />
             </div>
-            <a href={`https://news.ycombinator.com/item?id=${story.id}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={`https://news.ycombinator.com/item?id=${story.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Tag text={pluralize('comment', story.descendants)} />
             </a>
           </div>
           <h3 className="my-3 text-3xl font-semibold text-gray-900 hover:text-gray-700">
-            <a href={story.url || `https://news.ycombinator.com/item?id=${story.id}`} target="_blank" rel="noopener noreferrer">
+            <a
+              href={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {story.title}
             </a>
           </h3>
