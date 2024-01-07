@@ -2,6 +2,9 @@ import { ref, child, get, query, limitToFirst } from 'firebase/database'
 import { db } from '@/components/FirebaseConfig'
 import Story from '@/components/Story'
 
+// Forcing the page rerender periodically
+export const revalidate = 600 // seconds
+
 export default async function TopStories() {
   const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(20))
   const topStories = await get(topStoriesRef)
