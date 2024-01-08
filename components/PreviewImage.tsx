@@ -13,16 +13,14 @@ function PreviewImage({ url }: { url: string }) {
   } else if (isLoading) {
     result = <div>loading...</div>
   } else {
-    result = (
-      <img
-        src={data.image}
-        alt=""
-        className="absolute inset-0 h-full w-full rounded object-contain"
-      />
-    )
+    result = <img src={data.image} alt="preview" className="h-20 w-20 rounded-lg object-cover" />
   }
 
-  return <div className="relative aspect-[2/1] aspect-[16/9] md:w-64 md:shrink-0">{result}</div>
+  return (
+    <div className="aspect-[1/1] shrink-0 h-20 w-20" aria-hidden="true">
+      {result}
+    </div>
+  )
 }
 
 export default PreviewImage

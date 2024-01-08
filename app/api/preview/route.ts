@@ -1,7 +1,7 @@
 import fetchMeta from 'fetch-meta-tags'
 import { NextRequest, NextResponse } from 'next/server'
 
-const DEFAULT_IMAGE_URL = 'https://placehold.co/405x720?text=discuss'
+const DEFAULT_IMAGE_URL = 'https://placehold.co/80/fd790f/white?text=//'
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
@@ -17,6 +17,6 @@ export async function GET(req: NextRequest) {
   const meta = await fetchMeta(url)
   return NextResponse.json({
     status: 'ok',
-    image: meta.image || meta.icon || DEFAULT_IMAGE_URL,
+    image: meta.image || DEFAULT_IMAGE_URL,
   })
 }

@@ -1,7 +1,6 @@
 import { pluralize } from '@/components/Helpers'
-import Tag from './Tag'
 
-async function RelativeTime({ unixTimestamp }: { unixTimestamp: number }) {
+function RelativeTime({ unixTimestamp }: { unixTimestamp: number }) {
   const date = new Date(unixTimestamp * 1000)
   const delta = Date.now() - date.getTime()
   const seconds = Math.abs(delta) / 1000
@@ -24,11 +23,7 @@ async function RelativeTime({ unixTimestamp }: { unixTimestamp: number }) {
     relativeText = 'just now'
   }
 
-  return (
-    <time dateTime={date.toISOString()} className="">
-      <Tag text={relativeText} />
-    </time>
-  )
+  return <time dateTime={date.toISOString()}>{relativeText}</time>
 }
 
 export default RelativeTime

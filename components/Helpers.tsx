@@ -1,6 +1,6 @@
 import { parse } from 'node-html-parser'
 
-function htmlDecode(input: string) {
+function htmlDecode(input: string | undefined) {
   const parsed = parse(input || '')
   return { __html: parsed.toString() }
 }
