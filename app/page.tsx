@@ -25,11 +25,11 @@ export default function TopStories() {
   if (error) return <div>Error {error}</div>
 
   return (
-    <main className="space-y-20 max-w-7xl mx-auto">
+    <main className="w-full px-2 lg:px-4">
+      <h1 className="text-5xl font-light py-2 lg:py-5">Alt HN</h1>
       <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4">
-          <h1 className="text-5xl pt-4 px-2 font-light">Alt HN</h1>
-          <div className="flex lg:flex-col gap-6 lg:h-full overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto px-2 py-4">
+          <div className="flex lg:flex-col gap-6 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto px-2 py-4">
             {data.stories.map((storyID: number) => (
               <ListStory
                 storyID={storyID}
@@ -40,7 +40,9 @@ export default function TopStories() {
             ))}
           </div>
         </div>
-        <div className="lg:col-span-8 pt-4">{selected && <Story story={selected} />}</div>
+        <div className="lg:col-span-8 pt-4 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto">
+          {selected && <Story story={selected} />}
+        </div>
       </div>
     </main>
   )
