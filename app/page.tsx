@@ -19,7 +19,7 @@ export default function TopStories() {
 
   // @ts-ignore
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  const { data, error, isLoading } = useSWR('/api/items', fetcher)
+  const { data, error, isLoading } = useSWR('/api/items', fetcher, { refreshInterval: 60 * 1000 })
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error {error}</div>
