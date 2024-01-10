@@ -4,19 +4,26 @@ import { htmlDecode } from '@/components/Helpers'
 import useSWR from 'swr'
 import RelativeTime from './RelativeTime'
 import { useState } from 'react'
+import { ref, child, get } from 'firebase/database'
+import { db } from '@/components/FirebaseConfig'
 
 function Comment({ id, level = 0 }: { id: number; level: number }) {
   const [children, setChildren] = useState([])
   const [collapse, setCollapse] = useState(false)
 
-  // @ts-ignore
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  const { data, error, isLoading } = useSWR(`/api/items/${id}`, fetcher)
+  async function fetchItem(id: number) {
+    return await get(child(ref(db), `v0/item/${id}`))
+      .then((snapshot) => snapshot.val())
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+  const { data, error, isLoading } = useSWR(id.toString(), () => fetchItem(id))
 
   if (isLoading) return <div>Loading</div>
   if (error) return <div>error {error} </div>
 
-  const comment = data.item
+  const comment = data
   const text = comment ? htmlDecode(comment.text) : { __html: '' }
 
   function loadChildren() {

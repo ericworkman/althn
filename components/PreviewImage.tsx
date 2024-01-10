@@ -1,5 +1,6 @@
 'use client'
 
+import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
 
 function PreviewImage({ url }: { url: string }) {
@@ -9,9 +10,20 @@ function PreviewImage({ url }: { url: string }) {
 
   let result
   if (error) {
-    result = <div>failed to load</div>
+    result = <div className="h-20 w-20 flex items-center text-center">failed to load</div>
   } else if (isLoading) {
-    result = <div>loading...</div>
+    result = (
+      <TailSpin
+        visible={true}
+        height="80"
+        width="80"
+        color="#fd790f"
+        ariaLabel="tail-spin-loading"
+        radius="1"
+        wrapperStyle={{}}
+        wrapperClass="h-20 w-20"
+      />
+    )
   } else {
     result = <img src={data.image} alt="preview" className="h-20 w-20 rounded-lg object-cover" />
   }

@@ -1,5 +1,7 @@
 'use client'
 
+import { ref, child, get } from 'firebase/database'
+import { db } from '@/components/FirebaseConfig'
 import PreviewImage from './PreviewImage'
 import useSWR from 'swr'
 import ItemMeta from './ItemMeta'
@@ -14,29 +16,33 @@ function ListStory({
   selected: HNItem
   setSelected: (story: HNItem) => void
 }) {
-  // @ts-ignore
-  const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  const { data, error, isLoading } = useSWR(`/api/items/${storyID}`, fetcher)
+  async function fetchItem(id: number) {
+    return await get(child(ref(db), `v0/item/${id}`))
+      .then((snapshot) => snapshot.val())
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+  const { data, error, isLoading } = useSWR(storyID.toString(), () => fetchItem(storyID))
 
   if (isLoading) return <div>Loading</div>
   if (error) return <div>error {error} </div>
 
-  const story = data.item
+  const story = data
   const focusClass = storyID == selected.id ? 'ring ring-indigo-300 rounded-lg' : ''
 
   return (
-    <article key={story.id} className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full`}>
-      <div className="flex gap-3">
-        <PreviewImage url={story.url} />
+    <article key={story.id} className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3`}>
+      <PreviewImage url={story.url} />
+      <div>
         <h3 className="text-xl font-semibold text-gray-900 hover:text-gray-700">
           <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
             {story.title}
           </button>
         </h3>
-      </div>
-
-      <div className="text-xs flex items-center gap-3">
-        <ItemMeta item={story} />
+        <div className="text-xs flex items-center gap-3 mt-1">
+          <ItemMeta item={story} />
+        </div>
       </div>
     </article>
   )
