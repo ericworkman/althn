@@ -30,27 +30,12 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
     setChildren(comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />))
   }
 
-  let indent: string
-  switch (level) {
-    case 0:
-      indent = 'ml-0'
-      break
-    case 1:
-      indent = 'ml-4'
-      break
-    case 2:
-      indent = 'ml-8'
-      break
-    default:
-      indent = 'ml-12'
-  }
-
   return (
-    <div className={indent}>
+    <div className="ml-4">
       <div className="flex gap-4 items-center">
         <button
           onClick={() => setCollapse(!collapse)}
-          className="cursor-pointer hover:text-gray-300"
+          className="cursor-pointer hover:text-slate-300"
         >
           [-]
         </button>
@@ -60,7 +45,7 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
         </span>
       </div>
       {collapse ? (
-        <span className="text-gray-500">hidden</span>
+        <></>
       ) : (
         <>
           <p

@@ -35,7 +35,7 @@ function ListStory({
     <article key={story.id} className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3`}>
       <PreviewImage url={story.url} />
       <div>
-        <h3 className="text-xl font-semibold text-gray-900 hover:text-gray-700">
+        <h3 className="text-xl font-semibold hover:text-slate-500 dark:hover:text-slate-300">
           <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
             {story.title}
           </button>
