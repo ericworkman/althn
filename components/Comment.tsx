@@ -47,18 +47,15 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
       {collapse ? (
         <></>
       ) : (
-        <>
-          <p
-            className="text-md font-light leading-7 border-l-2 pl-4 w-full"
-            dangerouslySetInnerHTML={text}
-          />
+        <div className="border-l-2 border-slate-200 dark:border-slate-600 ml-2">
+          <p className="text-md font-light leading-7 pl-4 w-full" dangerouslySetInnerHTML={text} />
           {comment.kids && children.length == 0 && (
             <button onClick={() => loadChildren()} className="cursor-pointer mt-3 ml-2">
               Load Replies
             </button>
           )}
           <div className="mt-3">{children}</div>
-        </>
+        </div>
       )}
     </div>
   )

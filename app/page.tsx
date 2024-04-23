@@ -10,7 +10,7 @@ import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
 
 // Forcing the page rerender periodically
-export const revalidate = 600 // seconds
+export const revalidate = 300 // seconds
 
 export default function TopStories() {
   const [selected, setSelected] = useState<HNItem>({
@@ -29,7 +29,7 @@ export default function TopStories() {
       })
   }
   const { data, error, isLoading } = useSWR('topStories', fetchItems, {
-    refreshInterval: 60 * 1000,
+    refreshInterval: revalidate * 1000,
   })
 
   const stories = data
