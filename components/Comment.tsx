@@ -30,6 +30,8 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
     setChildren(comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />))
   }
 
+  if (!comment) return <></>
+
   return (
     <div className="ml-4">
       <div className="flex gap-4 items-center">
@@ -50,7 +52,10 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
         <div className="border-l-2 border-slate-200 dark:border-slate-600 ml-2">
           <p className="text-md font-light leading-7 pl-4 w-full" dangerouslySetInnerHTML={text} />
           {comment.kids && children.length == 0 && (
-            <button onClick={() => loadChildren()} className="cursor-pointer mt-3 ml-2">
+            <button
+              onClick={() => loadChildren()}
+              className="cursor-pointer mt-3 ml-2 font-light text-sm"
+            >
               Load Replies
             </button>
           )}
