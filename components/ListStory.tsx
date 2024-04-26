@@ -23,12 +23,12 @@ function ListStory({
         console.error(error)
       })
   }
-  const { data, error, isLoading } = useSWR(storyID.toString(), () => fetchItem(storyID))
+  const { data: story, error, isLoading } = useSWR(storyID.toString(), () => fetchItem(storyID))
 
   if (isLoading) return <div>Loading</div>
   if (error) return <div>error {error} </div>
+  if (!story) return <></>
 
-  const story = data
   const focusClass = storyID == selected.id ? 'ring ring-indigo-300 rounded-lg' : ''
 
   return (

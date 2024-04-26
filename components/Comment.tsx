@@ -18,19 +18,17 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
         console.error(error)
       })
   }
-  const { data, error, isLoading } = useSWR(id.toString(), () => fetchItem(id))
+  const { data: comment, error, isLoading } = useSWR(id.toString(), () => fetchItem(id))
 
   if (isLoading) return <div>Loading</div>
   if (error) return <div>error {error} </div>
+  if (!comment) return <></>
 
-  const comment = data
   const text = comment ? htmlDecode(comment.text) : { __html: '' }
 
   function loadChildren() {
     setChildren(comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />))
   }
-
-  if (!comment) return <></>
 
   return (
     <div className="ml-4">
