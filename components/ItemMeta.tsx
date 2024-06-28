@@ -8,7 +8,9 @@ function ItemMeta({ item }: { item: HNItem }) {
   let domain = { hostname: '' }
   try {
     domain = new URL(item.url ?? '')
-  } catch (error) {}
+  } catch (error) {
+    null
+  }
   const cleanDomain = domain.hostname
   return (
     <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm">
