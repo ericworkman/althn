@@ -25,7 +25,13 @@ function PreviewImage({ url }: { url: string }) {
       />
     )
   } else {
-    result = <img src={data.image} alt="preview" className="h-20 w-20 rounded-lg object-cover" />
+    result = (
+      <object data={data.image} type="image/jpg" className="h-20 w-20 rounded-lg object-cover">
+        <object data={data.icon} type="image/jpg" className="h-20 w-20 rounded-lg object-cover">
+          <img src={data.fallback} />
+        </object>
+      </object>
+    )
   }
 
   return (

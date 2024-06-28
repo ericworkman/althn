@@ -17,6 +17,8 @@ export async function GET(req: NextRequest) {
   const meta = await fetchMeta(url)
   return NextResponse.json({
     status: 'ok',
-    image: meta.image || DEFAULT_IMAGE_URL,
+    icon: meta.icon,
+    image: meta.image,
+    fallback: DEFAULT_IMAGE_URL,
   })
 }

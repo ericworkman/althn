@@ -32,15 +32,18 @@ function ListStory({
   const focusClass = storyID == selected.id ? 'ring ring-indigo-300 rounded-lg' : ''
 
   return (
-    <article key={story.id} className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3`}>
+    <article
+      key={story.id}
+      className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3 snap-center`}
+    >
       <PreviewImage url={story.url} />
       <div>
-        <h3 className="text-xl font-semibold hover:text-slate-500 dark:hover:text-slate-300">
+        <h3 className="text-xl/7 font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-500 dark:hover:text-slate-300">
           <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
             {story.title}
           </button>
         </h3>
-        <div className="text-xs flex items-center gap-3 mt-1">
+        <div className="flex items-center gap-3 mt-1">
           <ItemMeta item={story} />
         </div>
       </div>

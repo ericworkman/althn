@@ -5,25 +5,36 @@ import RelativeTime from './RelativeTime'
 import { BeakerIcon, ChatBubbleBottomCenterIcon } from '@heroicons/react/16/solid'
 
 function ItemMeta({ item }: { item: HNItem }) {
+  let domain = { hostname: '' }
+  try {
+    domain = new URL(item.url ?? '')
+  } catch (error) {}
+  const cleanDomain = domain.hostname
   return (
-    <div className="text-slate-500 dark:text-slate-400 flex gap-6">
-      <RelativeTime unixTimestamp={item.time} />
-      <div className="flex gap-1 items-center">
-        <BeakerIcon className="h-4 w-4" />
-        {item.score}
+    <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm">
+      <h4 className="">{cleanDomain}</h4>
+      <div className=" grid grid-cols-2 md:grid-cols-4 gap-3 items-center">
+        <RelativeTime unixTimestamp={item.time} />
+
+        <a
+          href={`https://news.ycombinator.com/user?id=${item.by}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-slate-500"
+        >
+          {item.by}
+        </a>
+
+        <div className="flex gap-1 items-center">
+          <BeakerIcon className="h-5 w-5" />
+          <span>{item.score}</span>
+        </div>
+
+        <div className="flex gap-1 items-center">
+          <ChatBubbleBottomCenterIcon className="h-5 w-5" />
+          {item.descendants}
+        </div>
       </div>
-      <div className="flex gap-1 items-center">
-        <ChatBubbleBottomCenterIcon className="h-4 w-4" />
-        {item.descendants}
-      </div>
-      <a
-        href={`https://news.ycombinator.com/user?id=${item.by}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:text-slate-500"
-      >
-        {item.by}
-      </a>
     </div>
   )
 }

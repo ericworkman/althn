@@ -4,19 +4,29 @@ import Comment from '@/components/Comment'
 import { htmlDecode } from '@/components/Helpers'
 import ItemMeta from './ItemMeta'
 import HNItem from '@/lib/types/HNItem'
+import { useEffect, useRef } from 'react'
 
 function Story({ story }: { story: HNItem }) {
+  const storyRef = useRef(null)
+
+  useEffect(() => {
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
+    // @ts-ignore
+    storyRef?.current?.scrollIntoView()
+  }, [story, storyRef])
+
   if (!story.id) return <></>
 
   const text = htmlDecode(story.text)
 
   return (
     <article key={story.id} className="px-4">
-      <h3 className="mb-3 text-4xl font-semibold hover:text-slate-600 dark:hover:text-slate-300">
+      <h3 className="mb-3 text-4xl font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300">
         <a
           href={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
           target="_blank"
           rel="noopener noreferrer"
+          ref={storyRef}
         >
           {story.title}
         </a>
@@ -28,10 +38,7 @@ function Story({ story }: { story: HNItem }) {
 
       <div className="flex flex-col gap-6">
         {story.text && (
-          <p
-            className="text-md font-light leading-6 text-ellipsis"
-            dangerouslySetInnerHTML={text}
-          />
+          <p className="text-base/7 font-light text-ellipsis" dangerouslySetInnerHTML={text} />
         )}
         {story.kids &&
           story.kids.map((commentID: number) => (
