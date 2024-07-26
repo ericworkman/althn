@@ -20,8 +20,8 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
   }
   const { data: comment, error, isLoading } = useSWR(id.toString(), () => fetchItem(id))
 
-  if (isLoading) return <div>Loading</div>
-  if (error) return <div>error {error} </div>
+  if (isLoading) return <div className="pl-2">Loading</div>
+  if (error) return <div className="pl-2">error {error} </div>
   if (!comment) return <></>
 
   const text = comment ? htmlDecode(comment.text) : { __html: '' }
@@ -57,7 +57,7 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
               Load Replies
             </button>
           )}
-          <div className="mt-3">{children}</div>
+          {children.length > 0 && <div className="mt-3">{children}</div>}
         </div>
       )}
     </div>
