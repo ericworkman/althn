@@ -14,8 +14,7 @@ function ItemMeta({ item }: { item: HNItem }) {
   const cleanDomain = domain.hostname
   return (
     <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm">
-      <h4 className="">{cleanDomain}</h4>
-      <div className=" grid grid-cols-2 md:grid-cols-4 gap-3 items-center">
+      <div className=" grid grid-cols-4 gap-3 items-center">
         <RelativeTime unixTimestamp={item.time} />
 
         <a
@@ -37,6 +36,7 @@ function ItemMeta({ item }: { item: HNItem }) {
           {item.descendants}
         </div>
       </div>
+      <h4 className="">{cleanDomain}</h4>
     </div>
   )
 }

@@ -34,18 +34,20 @@ function ListStory({
   return (
     <article
       key={story.id}
-      className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3 snap-center`}
+      className={`${focusClass} shrink-0 p-1 w-10/12 lg:w-full flex gap-3 snap-center flex-col overflow-hidden`}
     >
-      <PreviewImage url={story.url} />
-      <div>
-        <h3 className="text-xl/7 font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-500 dark:hover:text-slate-300">
-          <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
-            {story.title}
-          </button>
-        </h3>
-        <div className="flex items-center gap-3 mt-1">
-          <ItemMeta item={story} />
+      <div className="flex gap-4">
+        <PreviewImage url={story.url} />
+        <div>
+          <h3 className="text-xl/7 font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-500 dark:hover:text-slate-300">
+            <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
+              {story.title}
+            </button>
+          </h3>
         </div>
+      </div>
+      <div className="flex items-center gap-3">
+        <ItemMeta item={story} />
       </div>
     </article>
   )

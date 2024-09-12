@@ -31,11 +31,14 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
   }
 
   return (
-    <div className={level > 0 ? 'ml-2' : ''}>
+    <div className={['overflow-hidden mb-1', level > 0 ? 'ml-2' : ''].join(' ')}>
       <div className="flex gap-4 items-center">
         <button
           onClick={() => setCollapse(!collapse)}
-          className="cursor-pointer hover:text-slate-300"
+          className={[
+            'cursor-pointer hover:text-slate-300',
+            collapse ? 'text-slate-200 dark:text-slate-600' : 'text-slate-900 dark:text-slate-200',
+          ].join(' ')}
         >
           [-]
         </button>

@@ -26,8 +26,12 @@ function PreviewImage({ url }: { url: string }) {
     )
   } else {
     result = (
-      <object data={data.image} type="image/jpg" className="h-20 w-20 rounded-lg object-cover">
-        <object data={data.icon} type="image/jpg" className="h-20 w-20 rounded-lg object-cover">
+      <object
+        data={data.image || '/missing'}
+        type="image/jpg"
+        className="h-24 w-24 rounded-lg object-cover"
+      >
+        <object data={data.icon} type="image/jpg" className="h-24 w-24 rounded-lg object-cover">
           <img src={data.fallback} />
         </object>
       </object>
@@ -35,7 +39,7 @@ function PreviewImage({ url }: { url: string }) {
   }
 
   return (
-    <div className="aspect-[1/1] shrink-0 h-20 w-20" aria-hidden="true">
+    <div className="aspect-[1/1] shrink-0" aria-hidden="true">
       {result}
     </div>
   )

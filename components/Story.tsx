@@ -36,7 +36,7 @@ function Story({ story }: { story: HNItem }) {
         <ItemMeta item={story} />
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         {story.text && (
           <p className="text-base/7 font-light text-ellipsis" dangerouslySetInnerHTML={text} />
         )}
@@ -44,6 +44,7 @@ function Story({ story }: { story: HNItem }) {
           story.kids.map((commentID: number) => (
             <Comment id={commentID} key={commentID} level={0} />
           ))}
+        {!story.kids && <p className="">No comments</p>}
       </div>
     </article>
   )
