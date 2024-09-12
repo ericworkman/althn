@@ -13,18 +13,9 @@ function ItemMeta({ item }: { item: HNItem }) {
   }
   const cleanDomain = domain.hostname
   return (
-    <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm">
-      <div className=" grid grid-cols-4 gap-3 items-center">
+    <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm w-full max-w-xl">
+      <div className="flex justify-between items-center">
         <RelativeTime unixTimestamp={item.time} />
-
-        <a
-          href={`https://news.ycombinator.com/user?id=${item.by}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-slate-500"
-        >
-          {item.by}
-        </a>
 
         <div className="flex gap-1 items-center">
           <BeakerIcon className="h-5 w-5" />
@@ -36,7 +27,18 @@ function ItemMeta({ item }: { item: HNItem }) {
           {item.descendants}
         </div>
       </div>
-      <h4 className="">{cleanDomain}</h4>
+      <div className="flex justify-between items-center">
+        <h4 className="">{cleanDomain}</h4>
+
+        <a
+          href={`https://news.ycombinator.com/user?id=${item.by}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-slate-500"
+        >
+          {item.by}
+        </a>
+      </div>
     </div>
   )
 }
