@@ -42,7 +42,14 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
         >
           [-]
         </button>
-        <span className="text-lg">{comment.by}</span>
+        <a
+          href={`https://news.ycombinator.com/user?id=${comment.by}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-slate-500 text-lg"
+        >
+          {comment.by}
+        </a>
         <span className="text-sm">
           <RelativeTime unixTimestamp={comment.time} />
         </span>

@@ -6,6 +6,7 @@ import PreviewImage from './PreviewImage'
 import useSWR from 'swr'
 import ItemMeta from './ItemMeta'
 import HNItem from '@/lib/types/HNItem'
+import { useSearchParams } from 'next/navigation'
 
 function ListStory({
   storyID,
@@ -16,6 +17,8 @@ function ListStory({
   selected: HNItem
   setSelected: (story: HNItem) => void
 }) {
+  const searchParams = useSearchParams()
+
   async function fetchItem(id: number) {
     return await get(child(ref(db), `v0/item/${id}`))
       .then((snapshot) => snapshot.val())
@@ -31,6 +34,13 @@ function ListStory({
 
   const focusClass = storyID == selected.id ? 'ring ring-indigo-300 rounded-lg' : ''
 
+  function setAndPushStory(story: HNItem) {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('item', story.id as unknown as string)
+    window.history.pushState(null, '', `?${params.toString()}`)
+    setSelected(story)
+  }
+
   return (
     <article
       key={story.id}
@@ -40,7 +50,10 @@ function ListStory({
         <PreviewImage url={story.url} />
         <div>
           <h3 className="text-xl/7 font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-500 dark:hover:text-slate-300">
-            <button onClick={() => setSelected(story)} className="cursor-pointer text-left">
+            <button
+              onClick={() => setAndPushStory(story)}
+              className="cursor-pointer text-left line-clamp-4 md:line-clamp-3"
+            >
               {story.title}
             </button>
           </h3>

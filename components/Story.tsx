@@ -21,7 +21,7 @@ function Story({ story }: { story: HNItem }) {
 
   return (
     <article key={story.id} className="px-4">
-      <h3 className="mb-3 text-4xl font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300">
+      <h3 className="mb-3 text-2xl md:text-4xl font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 pt-2 md:pt-0">
         <a
           href={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
           target="_blank"

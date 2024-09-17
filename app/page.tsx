@@ -5,9 +5,10 @@ import { db } from '@/components/FirebaseConfig'
 import ListStory from '@/components/ListStory'
 import Story from '@/components/Story'
 import HNItem from '@/lib/types/HNItem'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
+import { useSearchParams } from 'next/navigation'
 
 // Forcing the page rerender periodically
 export const revalidate = 300 // seconds
@@ -19,6 +20,29 @@ export default function TopStories() {
     time: 0,
     type: 'story',
   })
+
+  const searchParams = useSearchParams()
+  const item = searchParams.get('item')
+
+  async function fetchItem(id: number) {
+    return await get(child(ref(db), `v0/item/${id}`))
+      .then((snapshot) => snapshot.val())
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  useEffect(() => {
+    const fetchStory = async (item: number) => {
+      return await fetchItem(item)
+    }
+
+    if (item) {
+      fetchStory(item as unknown as number)
+        .then((story) => setSelected(story))
+        .catch(console.error)
+    }
+  }, [item])
 
   async function fetchItems() {
     const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(30))
@@ -54,7 +78,7 @@ export default function TopStories() {
       <h1 className="text-2xl lg:text-5xl font-light py-2 lg:py-5">Alt HN</h1>
       <div className="grid grid-cols-1 lg:grid-cols-16 lg:gap-10">
         <div className="lg:col-span-5">
-          <div className="flex lg:flex-col gap-6 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto px-2 py-4 snap-x snap-mandatory">
+          <div className="flex lg:flex-col gap-6 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto pl-2 pr-4 py-4 snap-x snap-mandatory">
             {stories.map((storyID: number) => (
               <ListStory
                 storyID={storyID}

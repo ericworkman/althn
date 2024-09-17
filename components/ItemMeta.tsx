@@ -15,12 +15,12 @@ function ItemMeta({ item }: { item: HNItem }) {
   return (
     <div className="grid grid-cols-1 items-center gap-1 text-slate-500 dark:text-slate-300 text-sm w-full max-w-xl">
       <div className="flex justify-between items-center">
-        <RelativeTime unixTimestamp={item.time} />
-
         <div className="flex gap-1 items-center">
           <BeakerIcon className="h-5 w-5" />
           <span>{item.score}</span>
         </div>
+
+        <RelativeTime unixTimestamp={item.time} />
 
         <div className="flex gap-1 items-center">
           <ChatBubbleBottomCenterIcon className="h-5 w-5" />
