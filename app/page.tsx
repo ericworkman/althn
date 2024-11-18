@@ -78,7 +78,7 @@ export default function TopStories() {
       <h1 className="text-2xl lg:text-5xl font-light py-2 lg:py-5">Alt HN</h1>
       <div className="grid grid-cols-1 lg:grid-cols-16 lg:gap-10">
         <div className="lg:col-span-5">
-          <div className="flex lg:flex-col gap-6 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto pl-2 pr-4 py-4 snap-x snap-mandatory">
+          <div className="flex lg:flex-col gap-6 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-auto overflow-x-auto lg:overflow-x-auto pl-2 pr-4 py-4 snap-x snap-mandatory">
             {stories.map((storyID: number) => (
               <ListStory
                 storyID={storyID}
@@ -89,7 +89,7 @@ export default function TopStories() {
             ))}
           </div>
         </div>
-        <div className="lg:col-span-11 pt-4 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-scroll overflow-x-scroll lg:overflow-x-auto">
+        <div className="lg:col-span-11 pt-4 lg:h-[calc(100vh-88px)] overflow-y-none lg:overflow-y-auto overflow-x-auto lg:overflow-x-auto">
           {selected && <Story story={selected} />}
         </div>
       </div>

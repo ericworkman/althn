@@ -57,7 +57,7 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
       {collapse ? (
         <></>
       ) : (
-        <div className="border-l-2 border-slate-200 dark:border-slate-600 ml-2 overflow-scroll">
+        <div className="border-l-2 border-slate-200 dark:border-slate-600 ml-2 overflow-x-auto">
           <p className="text-base/7 font-light pl-4 w-full" dangerouslySetInnerHTML={text} />
           {comment.kids && children.length == 0 && (
             <button
