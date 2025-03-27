@@ -10,9 +10,6 @@ import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 
-// Forcing the page rerender periodically
-export const revalidate = 300 // seconds
-
 export default function TopStories() {
   const [selected, setSelected] = useState<HNItem>({
     id: 0,
@@ -45,7 +42,7 @@ export default function TopStories() {
   }, [item])
 
   async function fetchItems() {
-    const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(30))
+    const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(60))
     return await get(topStoriesRef)
       .then((snapshot) => (snapshot.exists() ? snapshot.val() : []))
       .catch((error) => {
@@ -53,7 +50,7 @@ export default function TopStories() {
       })
   }
   const { data, error, isLoading } = useSWR('topStories', fetchItems, {
-    refreshInterval: revalidate * 1000,
+    refreshInterval: 300 * 1000,
   })
 
   const stories = data

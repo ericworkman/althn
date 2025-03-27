@@ -12,13 +12,13 @@ function RelativeTime({ unixTimestamp }: { unixTimestamp: number }) {
   let relativeText
 
   if (years > 1) {
-    relativeText = `${pluralize('y', Math.round(years))} ago`
+    relativeText = `${pluralize('year', Math.round(years))} ago`
   } else if (days > 1) {
-    relativeText = `${pluralize('d', Math.round(days))} ago`
+    relativeText = `${pluralize('day', Math.round(days))} ago`
   } else if (hours > 1) {
-    relativeText = `${pluralize('hr', Math.round(hours))} ago`
+    relativeText = `${pluralize('hour', Math.round(hours))} ago`
   } else if (minutes > 1) {
-    relativeText = `${pluralize('m', Math.round(minutes))} ago`
+    relativeText = `${pluralize('minute', Math.round(minutes))} ago`
   } else {
     relativeText = 'just now'
   }
