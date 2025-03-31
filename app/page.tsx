@@ -5,12 +5,12 @@ import { db } from '@/components/FirebaseConfig'
 import ListStory from '@/components/ListStory'
 import Story from '@/components/Story'
 import HNItem from '@/lib/types/HNItem'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
 import { useSearchParams } from 'next/navigation'
 
-export default function TopStories() {
+function FetchStories() {
   const [selected, setSelected] = useState<HNItem>({
     id: 0,
     by: 'noone',
@@ -91,5 +91,13 @@ export default function TopStories() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function TopStories() {
+  return (
+    <Suspense>
+      <FetchStories />
+    </Suspense>
   )
 }

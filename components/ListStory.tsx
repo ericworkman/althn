@@ -7,6 +7,7 @@ import useSWR from 'swr'
 import ItemMeta from './ItemMeta'
 import HNItem from '@/lib/types/HNItem'
 import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 function ListStory({
   storyID,
@@ -50,12 +51,14 @@ function ListStory({
         <PreviewImage url={story.url} />
         <div>
           <h3 className="text-xl/7 font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-500 dark:hover:text-slate-300">
-            <button
-              onClick={() => setAndPushStory(story)}
-              className="cursor-pointer text-left line-clamp-4 md:line-clamp-3"
-            >
-              {story.title}
-            </button>
+            <Suspense>
+              <button
+                onClick={() => setAndPushStory(story)}
+                className="cursor-pointer text-left line-clamp-4 md:line-clamp-3"
+              >
+                {story.title}
+              </button>
+            </Suspense>
           </h3>
         </div>
       </div>
