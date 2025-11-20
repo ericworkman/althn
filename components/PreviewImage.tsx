@@ -29,6 +29,7 @@ function PreviewImage({ url }: { url: string }) {
     result = (
       <img
         src={data.image || data.icon || data.fallback}
+        alt=""
         className={imgClass}
         onError={(e) => {
           const target = e.target as HTMLImageElement

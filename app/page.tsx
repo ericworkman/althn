@@ -126,6 +126,12 @@ function FetchStories() {
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={() => setIsDrawerOpen(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setIsDrawerOpen(false)
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Close menu"
         />
       )}
 
@@ -181,12 +187,14 @@ function FetchStories() {
         </div>
 
         {/* Resizable divider - desktop only */}
-        <div
+        <button
+          type="button"
           className="hidden lg:block w-1 bg-slate-200 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-500 cursor-col-resize transition-colors relative group"
           onMouseDown={() => setIsResizing(true)}
+          aria-label="Resize sidebar"
         >
           <div className="absolute inset-y-0 -left-1 -right-1" />
-        </div>
+        </button>
 
         <div className="flex-1 lg:h-[calc(100vh-88px)] overflow-y-auto lg:pl-4">
           {selected && <Story story={selected} />}

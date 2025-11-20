@@ -23,7 +23,9 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
   // Auto-load first level of replies (level 0 only)
   useEffect(() => {
     if (comment && comment.kids && level === 0 && children.length === 0) {
-      setChildren(comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />))
+      setChildren(
+        comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />)
+      )
     }
   }, [comment, level, children.length])
 
