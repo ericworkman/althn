@@ -173,7 +173,7 @@ function FetchStories() {
               </svg>
             </button>
           </div>
-          <div className="flex flex-col gap-2 h-[calc(100vh-88px)] overflow-y-auto pt-2 md:pt-0 pl-2 pr-2 md:pr-3 pb-4">
+          <div className="flex flex-col gap-6 h-[calc(100vh-88px)] overflow-y-auto pt-2 md:pt-0 pl-2 pr-2 md:pr-3 pb-4">
             {stories.map((storyID: number) => (
               <ListStory
                 storyID={storyID}

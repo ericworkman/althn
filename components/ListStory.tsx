@@ -51,7 +51,7 @@ function ListStory({
   return (
     <article
       key={story.id}
-      className={`${focusClass} shrink-0 w-full flex gap-3 flex-col overflow-hidden transition-colors pr-2`}
+      className={`${focusClass} shrink-0 w-full flex gap-2 flex-col overflow-hidden transition-colors pr-2`}
     >
       <button
         onClick={() => setAndPushStory(story)}
