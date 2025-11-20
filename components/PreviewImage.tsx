@@ -27,11 +27,16 @@ function PreviewImage({ url }: { url: string }) {
     )
   } else {
     result = (
-      <object data={data.image || data.icon || data.fallback} type="image/jpg" className={imgClass}>
-        <object data={data.icon} type="image/jpg" className={imgClass}>
-          <img src={data.fallback} className={imgClass} />
-        </object>
-      </object>
+      <img
+        src={data.image || data.icon || data.fallback}
+        className={imgClass}
+        onError={(e) => {
+          const target = e.target as HTMLImageElement
+          if (target.src !== data.fallback) {
+            target.src = data.fallback
+          }
+        }}
+      />
     )
   }
 

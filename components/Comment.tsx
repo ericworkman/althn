@@ -3,7 +3,7 @@
 import { htmlDecode } from '@/components/Helpers'
 import useSWR from 'swr'
 import RelativeTime from './RelativeTime'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ref, child, get } from 'firebase/database'
 import { db } from '@/components/FirebaseConfig'
 
@@ -20,6 +20,13 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
   }
   const { data: comment, error, isLoading } = useSWR(id.toString(), () => fetchItem(id))
 
+  // Auto-load first level of replies (level 0 only)
+  useEffect(() => {
+    if (comment && comment.kids && level === 0 && children.length === 0) {
+      setChildren(comment.kids.map((kid: number) => <Comment id={kid} level={level + 1} key={kid} />))
+    }
+  }, [comment, level, children.length])
+
   if (isLoading) return <div className="pl-2">Loading</div>
   if (error) return <div className="pl-2">error {error} </div>
   if (!comment) return <></>
@@ -31,7 +38,7 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
   }
 
   return (
-    <div className={['overflow-hidden mb-1', level > 0 ? 'ml-2' : ''].join(' ')}>
+    <div className={['overflow-hidden mb-1 font-light', level > 0 ? 'ml-2' : ''].join(' ')}>
       <div className="flex gap-4 items-center">
         <button
           onClick={() => setCollapse(!collapse)}
@@ -58,7 +65,7 @@ function Comment({ id, level = 0 }: { id: number; level: number }) {
         <></>
       ) : (
         <div className="border-l-2 border-slate-200 dark:border-slate-600 ml-2 overflow-x-auto">
-          <p className="text-base/7 font-light pl-4 w-full" dangerouslySetInnerHTML={text} />
+          <p className="text-base/7 pl-4 w-full" dangerouslySetInnerHTML={text} />
           {comment.kids && children.length == 0 && (
             <button
               onClick={() => loadChildren()}

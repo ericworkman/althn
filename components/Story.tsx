@@ -10,9 +10,8 @@ function Story({ story }: { story: HNItem }) {
   const storyRef = useRef(null)
 
   useEffect(() => {
-    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
     // @ts-ignore
-    storyRef?.current?.scrollIntoView()
+    storyRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [story, storyRef])
 
   if (!story.id) return <></>
@@ -20,13 +19,14 @@ function Story({ story }: { story: HNItem }) {
   const text = htmlDecode(story.text)
 
   return (
-    <article key={story.id} className="px-4">
-      <h3 className="mb-3 text-2xl md:text-4xl font-semibold text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 pt-2 md:pt-0">
+    <article key={story.id} className="md:px-4 max-w-[720px]">
+      <h3 className="mb-3 text-2xl md:text-4xl font-medium text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 pt-2 md:pt-0">
         <a
           href={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
           target="_blank"
           rel="noopener noreferrer"
           ref={storyRef}
+          className="scroll-mt-20 lg:scroll-mt-0"
         >
           {story.title}
         </a>
