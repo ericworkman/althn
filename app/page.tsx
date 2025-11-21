@@ -44,6 +44,13 @@ function FetchStories() {
     }
   }, [item])
 
+  // Open drawer on mobile if no story is selected
+  useEffect(() => {
+    if (!selected.id && typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setIsDrawerOpen(true)
+    }
+  }, [selected.id])
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing) return
@@ -191,6 +198,7 @@ function FetchStories() {
           type="button"
           className="hidden lg:block w-1 bg-slate-200 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-500 cursor-col-resize transition-colors relative group"
           onMouseDown={() => setIsResizing(true)}
+          onDoubleClick={() => setLeftWidth(25)}
           aria-label="Resize sidebar"
         >
           <div className="absolute inset-y-0 -left-1 -right-1" />

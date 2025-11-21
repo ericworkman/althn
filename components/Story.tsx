@@ -19,7 +19,7 @@ function Story({ story }: { story: HNItem }) {
   const text = htmlDecode(story.text)
 
   return (
-    <article key={story.id} className="md:px-4 max-w-[720px]">
+    <article key={story.id} className="md:px-4 max-w-[720px] mx-auto">
       <h3 className="mb-3 text-2xl md:text-4xl font-medium text-slate-900 dark:text-slate-100 hover:text-slate-600 dark:hover:text-slate-300 pt-2 md:pt-0">
         <a
           href={story.url || `https://news.ycombinator.com/item?id=${story.id}`}
