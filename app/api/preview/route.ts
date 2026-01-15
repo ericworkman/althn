@@ -4,7 +4,15 @@ import { NextRequest, NextResponse } from 'next/server'
 const DEFAULT_IMAGE_URL = 'https://placehold.co/100/fd790f/white?text=//'
 
 // In-memory cache for preview metadata
-const previewCache = new Map<string, { data: any; timestamp: number }>()
+interface PreviewData {
+  status: string
+  icon?: string | null
+  image?: string | null
+  fallback: string
+  error?: string
+}
+
+const previewCache = new Map<string, { data: PreviewData; timestamp: number }>()
 const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 
 export async function GET(req: NextRequest) {
