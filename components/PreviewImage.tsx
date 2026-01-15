@@ -2,17 +2,41 @@
 
 import { TailSpin } from 'react-loader-spinner'
 import useSWR from 'swr'
+import { useEffect, useRef, useState } from 'react'
 
 function PreviewImage({ url }: { url: string }) {
+  const [isVisible, setIsVisible] = useState(false)
+  const imgRef = useRef<HTMLDivElement>(null)
+
+  // Intersection Observer for lazy loading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '100px' } // Start loading 100px before entering viewport
+    )
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   // @ts-ignore
   const fetcher = (...args) => fetch(...args).then((res) => res.json())
-  const { data, error, isLoading } = useSWR(`/api/preview?url=${encodeURIComponent(url)}`, fetcher)
+  const { data, isLoading } = useSWR(
+    isVisible ? `/api/preview?url=${encodeURIComponent(url)}` : null,
+    fetcher
+  )
   const imgClass = 'h-24 w-24 rounded-lg object-cover'
 
   let result
-  if (error) {
-    result = <div className="h-24 w-24 flex items-center text-center">failed to load</div>
-  } else if (isLoading) {
+  if (!isVisible || isLoading) {
     result = (
       <TailSpin
         visible={true}
@@ -42,7 +66,7 @@ function PreviewImage({ url }: { url: string }) {
   }
 
   return (
-    <div className="aspect-[1/1] shrink-0" aria-hidden="true">
+    <div ref={imgRef} className="aspect-[1/1] shrink-0" aria-hidden="true">
       {result}
     </div>
   )

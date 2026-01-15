@@ -1,6 +1,6 @@
 'use client'
 
-import { ref, child, get, query, limitToFirst } from 'firebase/database'
+import { ref, child, get } from 'firebase/database'
 import { db } from '@/components/FirebaseConfig'
 import ListStory from '@/components/ListStory'
 import Story from '@/components/Story'
@@ -80,20 +80,23 @@ function FetchStories() {
   }, [isResizing])
 
   async function fetchItems() {
-    const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(60))
-    return await get(topStoriesRef)
-      .then((snapshot) => (snapshot.exists() ? snapshot.val() : []))
-      .catch((error) => {
-        console.error(error)
-      })
+    const response = await fetch('/api/topstories')
+    if (!response.ok) {
+      throw new Error('Failed to fetch top stories')
+    }
+    const data = await response.json()
+    return data.stories
   }
+
   const { data, error, isLoading } = useSWR('topStories', fetchItems, {
     refreshInterval: 300 * 1000,
+    keepPreviousData: true, // Prevents UI jump during refresh
+    revalidateOnFocus: false, // Don't refresh when window regains focus
   })
 
   const stories = data
 
-  if (isLoading)
+  if (isLoading && !data)
     return (
       <TailSpin
         visible={true}
@@ -106,7 +109,8 @@ function FetchStories() {
         wrapperClass="h-screen flex items-center justify-center"
       />
     )
-  if (error) return <div>Error {error}</div>
+  if (error) return <div>Error: {error.message || 'Failed to load stories'}</div>
+  if (!stories) return null
 
   return (
     <main className="w-full px-2 lg:px-4">
