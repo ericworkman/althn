@@ -1,6 +1,6 @@
 'use client'
 
-import { ref, child, get } from 'firebase/database'
+import { ref, child, get, query, limitToFirst } from 'firebase/database'
 import { db } from '@/components/FirebaseConfig'
 import ListStory from '@/components/ListStory'
 import Story from '@/components/Story'
@@ -80,12 +80,12 @@ function FetchStories() {
   }, [isResizing])
 
   async function fetchItems() {
-    const response = await fetch('/api/topstories')
-    if (!response.ok) {
-      throw new Error('Failed to fetch top stories')
-    }
-    const data = await response.json()
-    return data.stories
+    const topStoriesRef = query(child(ref(db), 'v0/topstories'), limitToFirst(100))
+    return await get(topStoriesRef)
+      .then((snapshot) => (snapshot.exists() ? snapshot.val() : []))
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   const { data, error, isLoading } = useSWR('topStories', fetchItems, {
