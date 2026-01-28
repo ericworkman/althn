@@ -36,7 +36,7 @@ function PreviewImage({ url }: { url: string }) {
   const imgClass = 'h-24 w-24 rounded-lg object-cover'
 
   let result
-  if (!isVisible || isLoading) {
+  if (!isVisible || isLoading || !data) {
     result = (
       <TailSpin
         visible={true}
